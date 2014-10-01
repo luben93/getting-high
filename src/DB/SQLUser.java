@@ -12,6 +12,29 @@ import java.sql.Statement;
  */
 public class SQLUser {
 public SQLUser(){
+	//test();
+	
+}
+
+public boolean createUser(){
+	return false;
+	
+}
+
+public boolean addItemsToCart(){
+	return false;
+	
+}
+
+
+public Cart getCart(User user){
+	return null;
+}
+
+
+
+
+private void test(){
 	System.out.println("good morning");
 	try {
         Connection conn= connect("130.237.84.69", "mydb", "tester", "12345");
@@ -37,7 +60,7 @@ public SQLUser(){
  * @param pass
  */
 private Connection connect(String ip,String table,String user,String pass){
-	
+	//////fffffufuuuuuuuuuuu test only
 	Connection conn=null;
 	try {
         Class.forName("com.mysql.jdbc.Driver");
@@ -51,11 +74,5 @@ private Connection connect(String ip,String table,String user,String pass){
     return conn;
 
 }
-
-
-
-
-
-
 
 }
