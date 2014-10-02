@@ -2,10 +2,9 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
-
-
-
+<%@page import="Fasade.*"%>
 <html>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>web shop</title>
@@ -30,7 +29,7 @@
 
   
  <%
-   	String newN = "";
+         String newN = "";
          newN = request.getParameter( "newusername" );
          session.setAttribute( "newusername", newN );
          String newP = request.getParameter( "newpassword" );
@@ -39,6 +38,22 @@
          //provide user interaction when trying to login
          String message = "";
          session.setAttribute( "message", message);
+ 
+         if(newN==null)
+         {
+        	 newN="";
+         }
+       
+         if(!newN.equals(""))
+         {
+         Fasade.CreateUser U = new Fasade.CreateUser(); 
+         U.createUser(newN, newP);
+         System.out.print(newN);
+         }
+        
+       
+        
+         
          
   %>
 
