@@ -60,3 +60,5 @@ $RECYCLE.BIN/
 /build/
 
 .classpath
+
+src/DB/SQLUser.java
