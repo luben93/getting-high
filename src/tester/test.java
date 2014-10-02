@@ -13,12 +13,13 @@ public class test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SQLUser tester=new SQLUser();
-		User tmp;
-		System.out.println(tmp=tester.getUserByMail("junky@home.com"));
+		//tester.createUser();
+		//User tmp;
+		//System.out.println(tmp=tester.getUserByMail("junky@home.com"));
 		//ArrayList<Item> list=tester.getItemsByCategory("drugs");
 		/*for (int i=0;i<list.size();i++) {
 			System.out.println(list.get(i));
-		}*/
+		}
 		try {
 			String hashpass=User.hasher("12345");
 			System.out.println(hashpass);
@@ -26,7 +27,7 @@ public class test {
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 

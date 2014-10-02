@@ -1,25 +1,27 @@
 package Fasade;
-import BO.User;
+import java.sql.SQLException;
+
+import BO.TempUser;
 public class CreateUser {
-	private User U;
+	private TempUser TU;
 	public CreateUser()
 	{
-		User U = new User();
-		this.U = U;
+		TU = new TempUser(); 
+		
 	}
 
-	public boolean createUser(String email,String password)
+	public boolean createUser(String email,String password) throws SQLException
 	{
-		if(checkUnique(email))
-		{
-			U.newUser(email,password);
+		//if(checkUnique(email))
+		//{
+			TU.newUser(email,password);
 			return true;
-		}
+		//}
 		
-		else
-		{
-			return false;
-		}
+//		else
+//		{
+//			return false;
+//		}
 	}
 	
 	

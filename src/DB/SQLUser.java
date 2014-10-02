@@ -1,11 +1,15 @@
 package DB;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.mysql.jdbc.PreparedStatement;
 
 /**
  * SQLhelper
@@ -56,7 +60,7 @@ public class SQLUser {
 		return out;
 	}
 
-	public User getUserByMail(String mail) {
+	public User getUserByMail(String mail) throws NoSuchSQLLine {
 		User out = null;
 		try {
 			Statement myStmt = conn.createStatement();
@@ -67,13 +71,16 @@ public class SQLUser {
 				out = new User(rs.getInt("idusers"), rs.getString("mail"),
 						rs.getString("sha256hash"));
 			}
+			if(out != null){
+				throw new NoSuchSQLLine("no user with that mail");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return out;
 	}
-/*
+	/*
 	public ArrayList<History> getHistoryByUserId(int id){
 		ArrayList<History> out = new ArrayList<History>();
 		try {
@@ -94,7 +101,7 @@ public class SQLUser {
 	}*/
 
 	private void test() {
-		System.out.println("good morning");
+
 		try {
 			Connection conn = connect("83.251.242.112", "drugs", "admin",
 					"good@password");
@@ -120,8 +127,10 @@ public class SQLUser {
 	 * @param user
 	 * @param pass
 	 */
+
+	//this connection only happens once - start 
 	private Connection connect(String ip, String table, String user, String pass) {
-		// ////fffffufuuuuuuuuuuu test only
+
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -134,6 +143,62 @@ public class SQLUser {
 			ex.printStackTrace();
 		}
 		return conn;
+
+	}
+
+	/**
+	 * 
+	 * @param email
+	 * @param hashpassword
+	 * @return  SQL status 0 or 1 
+	 * @throws SQLException
+	 */
+	public int createUser(String email,String hashpassword) throws SQLException
+	{
+		//	PreparedStatement pstmt = null;
+
+
+		// TODO Auto-generated catch block
+
+		//INSERT INTO `drugs`.`users` (`idusers`, `sha256hash`, `mail`) VALUES ('2', 'mathias', 'odd');
+
+		//		String insertQuery = "INSERT INTO USERS (username, password)"
+		//				+"VALUES"
+		//				+"(?, ?)";
+
+		//		try {
+		//			hashpassword=User.hasher(hashpassword);
+		//		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+		//			
+		//		String insertQuery  = "INSERT INTO `drugs`.`users` ('iduser',`sha256hash`, `mail`) VALUES (?, ?, ?)";
+		//		pstmt = (PreparedStatement) conn.prepareStatement(insertQuery);
+		//		pstmt.setInt(1, 3);
+		//		pstmt.setString(2, hashpassword);
+		//		pstmt.setString(3, email);
+		//		
+		//		
+		//		
+		//		return pstmt.executeUpdate(insertQuery);
+		try {
+			getUserByMail(email);
+			throw new NoSuchSQLLine("that user already exists");
+
+			//user doesn't exist, we can create this one
+		} catch (NoSuchSQLLine e) {
+			try {
+				hashpassword=User.hasher(hashpassword);
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException eu) {
+				// TODO Auto-generated catch block
+				eu.printStackTrace();
+			}
+		  //perform SQL query
+			Statement test = conn.createStatement();
+			return test.executeUpdate("INSERT INTO `drugs`.`users` ( `sha256hash`, `mail`) VALUES ('"+hashpassword+"','" +email+"')");
+		}		
+
 
 	}
 

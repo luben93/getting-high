@@ -12,9 +12,8 @@ private SQLUser SQLU;
 	
 	public TempUser()
 	{
-		SQLUser SQLU = new SQLUser();
-		this.SQLU = SQLU;
-		
+		SQLU = new SQLUser();
+
 	}
 	
 	public void getItems()
@@ -32,17 +31,14 @@ private SQLUser SQLU;
 		
 	}
 	
-	public void newUser(String name,String password) 
+	public void newUser(String email,String password) throws SQLException
 	{
 		
-		try {
-			SQLU.createUser(name, password);
 		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-					
-		}
+			SQLU.createUser(email, password);
+		
+		
+	
 				
 	}
 	
