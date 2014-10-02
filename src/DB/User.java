@@ -1,5 +1,6 @@
 package DB;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -9,48 +10,44 @@ import java.util.Arrays;
 
 public class User {
 	private String mail;
-	private byte[] hashpassword;
+	private String hashpassword;
 	private int userId;
+	private boolean isLoggedIn;
 
-	public User(int userId,String mail, byte[] hashpassword) {
+	public User(int userId, String mail, String hashpassword) {
 		this.mail = mail;
 		this.setUserId(userId);
 		this.hashpassword = hashpassword;
+		isLoggedIn = false;
 	}
 
 	public String getMail() {
 		return mail;
 	}
 
-	protected boolean correctPassword(byte[] enteredhashedpass) {
-		
+	public boolean correctPassword(String enteredhashedpass) {
 		if (enteredhashedpass.equals(new String(hashpassword))) {
+			isLoggedIn = true;
+		}
+		
+		if (isLoggedIn) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
-	public static byte[] hasher(char[] pass) throws NoSuchAlgorithmException{
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		md.update(toBytes(pass)); // Change this to "UTF-16" if needed
-		return  md.digest();
-	}
-	
-	
-	static byte[] toBytes(char[] chars) {
-		    CharBuffer charBuffer = CharBuffer.wrap(chars);
-		    ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
-		    byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
-		            byteBuffer.position(), byteBuffer.limit());
-		    Arrays.fill(charBuffer.array(), '\u0000'); // clear sensitive data
-		    Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
-		    return bytes;
-		}
 
-	public String toString(){
-		return "User:\n"+mail+"\n"+userId+"\n"+hashCode();
+	public static String hasher(String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(pass.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+		return ""+md.digest();
 	}
+
+
+	public String toString() {
+		return "User:\n" + mail + "\n" + userId + "\n" + hashCode();
+	}
+
 	public int getUserId() {
 		return userId;
 	}

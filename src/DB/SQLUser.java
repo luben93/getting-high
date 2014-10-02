@@ -64,16 +64,34 @@ public class SQLUser {
 					.executeQuery("select * from users where mail = '" + mail
 							+ "'");
 			while (rs.next()) {
-				byte[] bytearr = User.toBytes((rs.getString("sha256hash").toCharArray()));
-				out = new User(rs.getInt("idusers"),rs.getString("mail"),bytearr);
+				out = new User(rs.getInt("idusers"), rs.getString("mail"),
+						rs.getString("sha256hash"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return out;
-
 	}
+/*
+	public ArrayList<History> getHistoryByUserId(int id){
+		ArrayList<History> out = new ArrayList<History>();
+		try {
+			Statement myStmt = conn.createStatement();
+			ResultSet rs = myStmt
+					.executeQuery("select * from history where userid = '" + id
+							+ "'");
+			History history = null;
+			while (rs.next()) {
+				history = new History(rs.getInt("historyId"), rs.getInt("user"),rs.getInt(" history"), rs.getInt("payed"));
+						out.add(item);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}*/
 
 	private void test() {
 		System.out.println("good morning");
