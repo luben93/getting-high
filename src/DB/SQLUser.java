@@ -1,85 +1,140 @@
 package DB;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-//import java.sql.*; 
+import java.util.ArrayList;
 
-import com.mysql.jdbc.PreparedStatement;
+/**
+ * SQLhelper
+ * 
+ * @author luben
+ *
+ */
+public class SQLUser {
+	private Connection conn;
 
+	public SQLUser() {
+		// test();
+		conn = connect("83.251.242.112", "drugs", "admin", "good@password");
+	}
 
-public class SQLUser
-{
+	public boolean createUser() {
+		return false;
 
-	private Connection mycon;
-	private Statement myStmt;
-	private ResultSet myRs;
+	}
 
-	public SQLUser()
-	{
+	public boolean addItemsToCart() {
+		return false;
 
+	}
 
-		try{
-			// load the driver before trying the connection!!!!
-			Class.forName("com.mysql.jdbc.Driver");
+	public Cart getCart(User user) {
+		return null;
+	}
 
-			//get a connection
-			this.mycon = DriverManager.getConnection("jdbc:mysql://localhost:3306/MYDB","root","root");
-			//Class.forName("com.mysql.jdbc.Driver"); 
-			//create a statement
-			this.myStmt = mycon.createStatement();
-
-
-			//execute SQL query 
-			this.myRs = myStmt.executeQuery("select * from users");
-			//ResultSet myRs = myStmt.executeQuery("INSERT INTO users VALUES (m,m)");
-
-
-			//process the result
-			while(myRs.next())
-			{
-				System.out.println(myRs.getString("password") + ", " + myRs.getString("username"));
+	public ArrayList<Item> getItemsByCategory(String cat) {
+		ArrayList<Item> out = new ArrayList<Item>();
+		try {
+			Statement myStmt = conn.createStatement();
+			ResultSet rs = myStmt
+					.executeQuery("select * from item where category = '" + cat
+							+ "'");
+			Item item = null;
+			while (rs.next()) {
+				item = new Item(rs.getInt("itemid"), rs.getString("name"),
+						rs.getString("desc"), rs.getDouble("price"),
+						rs.getInt("saldo"), rs.getString("category"));
+				out.add(item);
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return out;
 	}
 
+	public User getUserByMail(String mail) {
+		User out = null;
+		try {
+			Statement myStmt = conn.createStatement();
+			ResultSet rs = myStmt
+					.executeQuery("select * from users where mail = '" + mail
+							+ "'");
+			while (rs.next()) {
+				out = new User(rs.getInt("idusers"), rs.getString("mail"),
+						rs.getString("sha256hash"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+/*
+	public ArrayList<History> getHistoryByUserId(int id){
+		ArrayList<History> out = new ArrayList<History>();
+		try {
+			Statement myStmt = conn.createStatement();
+			ResultSet rs = myStmt
+					.executeQuery("select * from history where userid = '" + id
+							+ "'");
+			History history = null;
+			while (rs.next()) {
+				history = new History(rs.getInt("historyId"), rs.getInt("user"),rs.getInt(" history"), rs.getInt("payed"));
+						out.add(item);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}*/
 
-	public void createUser(String name,String password) throws SQLException
-	{
-		PreparedStatement pstmt = null;
-		
-		String insertQuery = "INSERT INTO USERS (username, password)"
-				+"VALUES"
-				+"(?, ?)";
-		pstmt = (PreparedStatement) mycon.prepareStatement(insertQuery);
-		pstmt.setString(1, name);
-		pstmt.setString(2, password);
-		pstmt.executeUpdate();
+	private void test() {
+		System.out.println("good morning");
+		try {
+			Connection conn = connect("83.251.242.112", "drugs", "admin",
+					"good@password");
+			Statement myStmt = conn.createStatement();
 
+			ResultSet rs = myStmt.executeQuery("select * from users");
+			// *
+			while (rs.next()) {
+				System.out.println(rs.getString("username")
+						+ rs.getString("password"));
+			}
+			// */
+		} catch (Exception ex) {
+			// handle the error
+			System.err.println(ex.getMessage());
+		}
+	}
+
+	/**
+	 * 
+	 * @param ip
+	 * @param table
+	 * @param user
+	 * @param pass
+	 */
+	private Connection connect(String ip, String table, String user, String pass) {
+		// ////fffffufuuuuuuuuuuu test only
+		Connection conn = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/"
+					+ table, user, pass);
+			// System.out.println(conn.getClientInfo());
+		} catch (SQLException | ClassNotFoundException ex) {
+			// handle the error
+			System.err.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return conn;
 
 	}
-	
-	public void updateSaldo()
-	{
-		
-	}
-	
-	public void Pay()
-	{
-		
-	}
-	
-	public boolean checkUserUnique()
-	{
-		return true;
-		
-	}
+
 }
-
-
-
