@@ -4,19 +4,35 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<title>Start Page</title>
 </head>
 <body>
-<FORM METHOD=POST ACTION="controller.jsp">
-Enter Username <INPUT TYPE=TEXT NAME=username SIZE=20><BR>
-Enter Password <INPUT TYPE="password" NAME=password SIZE=20><BR>
-<P><INPUT TYPE="button" VALUE="Send">
+<div id="wrapper">
+<div id="login_bar" style="text-align: right">                                               
+          
+               <FORM METHOD=POST ACTION="controller.jsp">
+Username:<INPUT TYPE=TEXT NAME=username SIZE=20> 
+Password:<INPUT TYPE="password" NAME=password SIZE=20>
+<INPUT TYPE="button" VALUE="Send">
 </FORM>
-<BR>
-<FORM METHOD=POST ACTION="controller.jsp">
-Enter Username <INPUT TYPE=TEXT NAME=username SIZE=20><BR>
-Enter Password <INPUT TYPE="password" NAME=password SIZE=20><BR>
-<P><INPUT TYPE="button" VALUE="Send">
-</FORM>
+<form method="get" action="newUser.jsp">
+    <button type="submit">register</button>
+</form>
+</div>
+
+<div id="header">
+</div>
+</div>
+
+
+hello world
+
+
+
+
+
+
 </body>
 </html>
+
