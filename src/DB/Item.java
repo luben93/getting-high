@@ -6,15 +6,18 @@ private String name;
 private String desc;
 private double price;
 private int saldo;
-private category cat;
+private String cat;
+private int itemId;
 	
-	public Item(String name,String desc,double price,int saldo, category cat){
+	public Item(int itemId,String name,String desc,double price,int saldo, String cat){
+		this.setItemId(itemId);
 		this.setName(name);
 		this.setDesc(desc);
 		this.setPrice(price);
 		this.setSaldo(saldo);
 		this.setCat(cat);
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -39,10 +42,31 @@ private category cat;
 	public void setSaldo(int saldo) {//TODO maybe muteble
 		this.saldo = saldo;
 	}
-	public category getCat() {
+	public String getCat() {
 		return cat;
 	}
-	private void setCat(category cat) {
+	private void setCat(String cat) {
 		this.cat = cat;
+	}
+	
+	public String toString(){
+		String out="Item:\n";
+				out=out+itemId+"\n";
+				out=out+name+"\n";
+				out=out+desc+"\n";
+				out=out+price+"\n";
+				out=out+saldo+"\n";
+				out=out+cat+"\n";
+				out=out+this.hashCode();
+		return out;
+		
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	private void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 }

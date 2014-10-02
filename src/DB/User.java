@@ -10,9 +10,11 @@ import java.util.Arrays;
 public class User {
 	private String mail;
 	private byte[] hashpassword;
+	private int userId;
 
-	public User(String mail, byte[] hashpassword) {
+	public User(int userId,String mail, byte[] hashpassword) {
 		this.mail = mail;
+		this.setUserId(userId);
 		this.hashpassword = hashpassword;
 	}
 
@@ -29,13 +31,14 @@ public class User {
 		}
 	}
 	
-	public byte[] hasher(char[] pass) throws NoSuchAlgorithmException{
+	public static byte[] hasher(char[] pass) throws NoSuchAlgorithmException{
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(toBytes(pass)); // Change this to "UTF-16" if needed
 		return  md.digest();
 	}
 	
-	private byte[] toBytes(char[] chars) {
+	
+	static byte[] toBytes(char[] chars) {
 		    CharBuffer charBuffer = CharBuffer.wrap(chars);
 		    ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
 		    byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
@@ -44,4 +47,15 @@ public class User {
 		    Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
 		    return bytes;
 		}
+
+	public String toString(){
+		return "User:\n"+mail+"\n"+userId+"\n"+hashCode();
+	}
+	public int getUserId() {
+		return userId;
+	}
+
+	private void setUserId(int userId) {
+		this.userId = userId;
+	}
 }
