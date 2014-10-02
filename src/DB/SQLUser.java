@@ -22,12 +22,7 @@ public class SQLUser {
 
 	public SQLUser() {
 		// test();
-		System.out.println("hi");
-		conn = connect("83.251.242.112", "drugslvl3", "admin", "good@password");
-	}
-	
-	public void killConnection() throws SQLException{
-		conn.close();
+		conn = connect("83.251.242.112", "drugs", "admin", "good@password");
 	}
 
 	public boolean createUser() {
