@@ -3,7 +3,7 @@
   <display-name>getting-high</display-name>
   <welcome-file-list>
     
-    <welcome-file>startPage.jsp</welcome-file>
+    <welcome-file>StartPage.jsp</welcome-file>
     
   </welcome-file-list>
 </web-app>
