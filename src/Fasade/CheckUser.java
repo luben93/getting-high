@@ -1,11 +1,11 @@
 package Fasade;
-import BO.User;
+import BO.TempUser;
 public class CheckUser {
-	private User US ;
+	private TempUser US ;
 	
 	public CheckUser()
 		{
-		User US = new User();
+		TempUser US = new TempUser();
 		this.US = US;
 	}
 		
