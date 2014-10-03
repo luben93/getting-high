@@ -2,17 +2,17 @@ package BO;
 
 import java.sql.SQLException;
 
-import DB.SQLUser;
+import DB.singeltonSQLUser;
 
 public class TempUser {
 	
-private SQLUser SQLU;
+private singeltonSQLUser SQLU;
 	
 
 	
 	public TempUser()
 	{
-		SQLU = new SQLUser();
+		SQLU = new singeltonSQLUser();
 
 	}
 	
