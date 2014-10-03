@@ -9,6 +9,7 @@
 <title>create a new user</title>
 </head>
 <body>
+<%=session.getAttribute("already") %><BR>
 <FORM METHOD=POST ACTION="startPage.jsp">
 Enter Username <INPUT TYPE=TEXT NAME=newusername SIZE=20><BR>
 Enter Password <INPUT TYPE="password" NAME=newpassword SIZE=20><BR>

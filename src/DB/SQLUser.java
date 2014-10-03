@@ -22,7 +22,10 @@ public class SQLUser {
 
 	public SQLUser() {
 		// test();
-		conn = connect("83.251.242.112", "drugs", "admin", "good@password");
+	//	conn = connect("83.251.242.112", "drugslvl3", "admin", "good@password");
+		
+		//localhost
+		conn = connect("127.0.0.1", "mydb", "root", "root");
 	}
 
 	public boolean createUser() {
@@ -196,7 +199,7 @@ public class SQLUser {
 			}
 		  //perform SQL query
 			Statement test = conn.createStatement();
-			return test.executeUpdate("INSERT INTO `drugs`.`users` ( `sha256hash`, `mail`) VALUES ('"+hashpassword+"','" +email+"')");
+			return test.executeUpdate("INSERT INTO `mydb`.`users` ( `email`, `password`) VALUES ('"+email+"','" +hashpassword+"')");
 		}		
 
 
