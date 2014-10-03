@@ -17,7 +17,7 @@ import com.mysql.jdbc.PreparedStatement;
  * @author luben
  *
  */
-public class SQLUser {
+abstract class SQLUser{
 	private Connection conn;
 
 	public SQLUser() {
