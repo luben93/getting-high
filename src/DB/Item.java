@@ -17,6 +17,14 @@ private int itemId;
 		this.setSaldo(saldo);
 		this.setCat(cat);
 	}
+	public Item(String name,String desc,double price,int saldo, String cat){
+		this.setItemId(0);
+		this.setName(name);
+		this.setDesc(desc);
+		this.setPrice(price);
+		this.setSaldo(saldo);
+		this.setCat(cat);
+	}
 	
 	public String getName() {
 		return name;

@@ -22,7 +22,7 @@ abstract class SQLUser{
 
 	public SQLUser() {
 		// test();
-		conn = connect("83.251.242.112", "drugslvl3", "admin", "good@password");
+		conn = connect("130.237.84.69", "mydb", "tester", "good");
 	}
 	
 	public void kill() throws SQLException{
@@ -72,8 +72,8 @@ abstract class SQLUser{
 					.executeQuery("select * from users where mail = '" + mail
 							+ "'");
 			while (rs.next()) {
-				out = new User(rs.getInt("idusers"), rs.getString("mail"),
-						rs.getString("sha256hash"));
+				out = new User(rs.getString("mail"),
+						rs.getString("password"));
 			}
 			if(out != null){
 				throw new NoSuchSQLLine("no user with that mail");
@@ -103,7 +103,7 @@ abstract class SQLUser{
 		}
 		return out;
 	}*/
-
+/*
 	private void test() {
 
 		try {
@@ -112,18 +112,18 @@ abstract class SQLUser{
 			Statement myStmt = conn.createStatement();
 
 			ResultSet rs = myStmt.executeQuery("select * from users");
-			// *
+			
 			while (rs.next()) {
 				System.out.println(rs.getString("username")
 						+ rs.getString("password"));
 			}
-			// */
+			
 		} catch (Exception ex) {
 			// handle the error
 			System.err.println(ex.getMessage());
 		}
 	}
-
+*/
 	/**
 	 * 
 	 * @param ip
@@ -200,7 +200,7 @@ abstract class SQLUser{
 			}
 		  //perform SQL query
 			Statement test = conn.createStatement();
-			return test.executeUpdate("INSERT INTO `drugs`.`users` ( `sha256hash`, `mail`) VALUES ('"+hashpassword+"','" +email+"')");
+			return test.executeUpdate("INSERT INTO users ( `password`, `mail`) VALUES ('"+hashpassword+"','" +email+"')");
 		}		
 
 

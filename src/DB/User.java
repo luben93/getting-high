@@ -20,6 +20,12 @@ public class User {
 		this.hashpassword = hashpassword;
 		isLoggedIn = false;
 	}
+	public User( String mail, String hashpassword) {
+		this.mail = mail;
+		this.setUserId(0);
+		this.hashpassword = hashpassword;
+		isLoggedIn = false;
+	}
 
 	public String getMail() {
 		return mail;
