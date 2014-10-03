@@ -2,11 +2,11 @@ package DB;
 
 import java.util.ArrayList;
 
-public class Cart {
+public class CartDB {
 	private User user;
 	private ArrayList<Item> list;
 
-	public Cart(User user) {
+	public CartDB(User user) {
 		this.user = user;
 		list = new ArrayList<Item>();
 	}
