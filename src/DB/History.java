@@ -2,30 +2,35 @@ package DB;
 
 public class History {
 private int historyId;
-	private User user;
-private Item[] history;
-private boolean[] payed;
-private int size;
+private User user;
+private Item history;
+private boolean payed;
 
 
-public History(int historyId,User user,Item[] history,boolean[] payed){
+public History(int historyId,User user,Item historyItem,boolean payed){
 	this.setUser(user);
 	this.setHistoryId(historyId);
-	this.history=history;
+	this.history=historyItem;
 	this.payed=payed;
-	size=history.length;
 }
 
-public double getDebt(){
-	double owed=0;
-	for(int i=0;i<size;i++){
-		if(!payed[i]){
-			owed=owed+history[i].getPrice();
-		}
-	}
-return owed;
-}
+//public double getDebt(){
+//	double owed=0;
+//	for(int i=0;i<size;i++){
+//		if(!payed[i]){
+//			owed=owed+history[i].getPrice();
+//		}
+//	}
+//return owed;
+//}
 
+
+public Item getItem(){
+	return history;
+}
+public boolean getPayed(){
+	return payed;
+}
 public int getHistoryId() {
 	return historyId;
 }

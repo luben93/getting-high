@@ -2,9 +2,11 @@ package tester;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.Item;
+import DB.NoSuchSQLLine;
 import DB.User;
 import DB.singeltonSQLUser;
 
@@ -14,13 +16,19 @@ public class test {
 		// TODO Auto-generated method stub
 		singeltonSQLUser tester=new singeltonSQLUser();
 		
-		//tester.createUser();
-		//User tmp;
-		//System.out.println(tmp=tester.getUserByMail("junky@home.com"));
-		ArrayList<Item> list=tester.getItemsByCategory("drugs");
+		User user;
+		try {
+			user = tester.getUserByMail("hej");
+		
+		//System.out.println(tester.getItemByName("item1"));
+		System.out.println(tester.payAllItemsInHistory(user));
+		ArrayList<Item> list=tester.getItemsByCategory("cat1");
 		for (int i=0;i<list.size();i++) {
-			System.out.println(list.get(i));
-		}/*
+			tester.addItemsToHistory(list.get(i), user);
+		}
+		System.out.println(tester.getCart(user));
+		
+		/*
 		try {
 			String hashpass=User.hasher("12345");
 			System.out.println(hashpass);
@@ -30,7 +38,13 @@ public class test {
 			e.printStackTrace();
 		}*/
 		 
-		
+		} catch (NoSuchSQLLine e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

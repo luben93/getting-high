@@ -29,19 +29,58 @@ abstract class SQLUser{
 		conn.close();
 	}
 
-	public boolean createUser() {
-		return false;
-
+	public Item getItemByName(String name){
+		Item out = null;
+		try {
+			Statement myStmt = conn.createStatement();
+			ResultSet rs = myStmt
+					.executeQuery("select * from Item where iditem = '" + name
+							+ "'");
+			while (rs.next()) {
+				out = new Item(rs.getString("iditem"), rs.getString("desc"), rs.getDouble("price"),rs.getInt("saldo"), rs.getString("category"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
 	}
 
-	public boolean addItemsToCart() {
-		return false;
-
+	public int addItemsToHistory(Item item,User user) throws SQLException {
+		Statement test = conn.createStatement();
+		return test.executeUpdate("INSERT INTO history (userid,itemid) VALUES ('"+user.getMail()+"','" +item.getName()+"')");
 	}
-
-	public Cart getCart(User user) {
-		return null;
+	
+	public int payAllItemsInHistory(User user) throws SQLException{
+		//Statement test = conn.createStatement();
+		java.sql.PreparedStatement pstmt = conn.prepareStatement("update history set payed = 1 where userid = ?");
+		pstmt.setString(1, user.getMail());
+		return pstmt.executeUpdate();
 	}
+	
+	/*
+	public int payItemInHistory(Item item,User user){
+		return 0;
+	}*/
+
+	public ArrayList<Item> getCart(User user) {
+		ArrayList<Item> out = new ArrayList<Item>();
+		try {
+			Statement myStmt = conn.createStatement();
+			ResultSet rs = myStmt
+					.executeQuery("select * from history where payed = 0 and userid='"+user.getMail()+"'");
+			Item item = null;
+			while (rs.next()) {
+				//System.out.println(rs.getString("itemid"));
+				item=getItemByName(rs.getString("itemid"));
+				out.add(item);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+			}
 
 	public ArrayList<Item> getItemsByCategory(String cat) {
 		ArrayList<Item> out = new ArrayList<Item>();
@@ -52,7 +91,7 @@ abstract class SQLUser{
 							+ "'");
 			Item item = null;
 			while (rs.next()) {
-				item = new Item(rs.getInt("itemid"), rs.getString("name"),
+				item = new Item(rs.getString("iditem"),
 						rs.getString("desc"), rs.getDouble("price"),
 						rs.getInt("saldo"), rs.getString("category"));
 				out.add(item);
@@ -75,7 +114,7 @@ abstract class SQLUser{
 				out = new User(rs.getString("mail"),
 						rs.getString("password"));
 			}
-			if(out != null){
+			if(out == null){
 				throw new NoSuchSQLLine("no user with that mail");
 			}
 		} catch (SQLException e) {
@@ -84,8 +123,8 @@ abstract class SQLUser{
 		}
 		return out;
 	}
-	/*
-	public ArrayList<History> getHistoryByUserId(int id){
+	
+	public ArrayList<History> getHistoryByUserId(int id) throws NoSuchSQLLine{
 		ArrayList<History> out = new ArrayList<History>();
 		try {
 			Statement myStmt = conn.createStatement();
@@ -94,36 +133,22 @@ abstract class SQLUser{
 							+ "'");
 			History history = null;
 			while (rs.next()) {
-				history = new History(rs.getInt("historyId"), rs.getInt("user"),rs.getInt(" history"), rs.getInt("payed"));
-						out.add(item);
+				User usr=getUserByMail(rs.getString("userid"));
+				Item item=getItemByName(rs.getString("itemid"));
+				boolean payed=false;
+						if(rs.getInt("payed")==1){
+							payed=true;
+						}
+				history = new History(rs.getInt("historyId"), usr, item, payed);
+						out.add(history);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return out;
-	}*/
-/*
-	private void test() {
-
-		try {
-			Connection conn = connect("83.251.242.112", "drugs", "admin",
-					"good@password");
-			Statement myStmt = conn.createStatement();
-
-			ResultSet rs = myStmt.executeQuery("select * from users");
-			
-			while (rs.next()) {
-				System.out.println(rs.getString("username")
-						+ rs.getString("password"));
-			}
-			
-		} catch (Exception ex) {
-			// handle the error
-			System.err.println(ex.getMessage());
-		}
 	}
-*/
+
 	/**
 	 * 
 	 * @param ip
@@ -159,33 +184,6 @@ abstract class SQLUser{
 	 */
 	public int createUser(String email,String hashpassword) throws SQLException
 	{
-		//	PreparedStatement pstmt = null;
-
-
-		// TODO Auto-generated catch block
-
-		//INSERT INTO `drugs`.`users` (`idusers`, `sha256hash`, `mail`) VALUES ('2', 'mathias', 'odd');
-
-		//		String insertQuery = "INSERT INTO USERS (username, password)"
-		//				+"VALUES"
-		//				+"(?, ?)";
-
-		//		try {
-		//			hashpassword=User.hasher(hashpassword);
-		//		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-		//			
-		//		String insertQuery  = "INSERT INTO `drugs`.`users` ('iduser',`sha256hash`, `mail`) VALUES (?, ?, ?)";
-		//		pstmt = (PreparedStatement) conn.prepareStatement(insertQuery);
-		//		pstmt.setInt(1, 3);
-		//		pstmt.setString(2, hashpassword);
-		//		pstmt.setString(3, email);
-		//		
-		//		
-		//		
-		//		return pstmt.executeUpdate(insertQuery);
 		try {
 			getUserByMail(email);
 			throw new NoSuchSQLLine("that user already exists");
