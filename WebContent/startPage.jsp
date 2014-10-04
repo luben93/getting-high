@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="Fasade.*"%>
+<%@page import="BO.*"%>
 <html>
 
 <head>
@@ -48,9 +48,13 @@
          {  
          
         try{
-         Fasade.CreateUser U = new Fasade.CreateUser(); 
+         BO.Fasade fasad = new BO.Fasade(); 
        
-        	 U.createUser(newN, newP);
+        	 fasad.createUser(newN, newP);
+        	 
+        	 session.setAttribute( "already", "");
+        	 request.getRequestDispatcher("newUser.jsp").forward(request, response);
+         
          }
          catch(com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e)
          {

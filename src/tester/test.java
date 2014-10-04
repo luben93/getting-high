@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import DB.Item;
 import DB.NoSuchSQLLine;
 import DB.User;
-import DB.singeltonSQLUser;
 
 public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		singeltonSQLUser tester=new singeltonSQLUser();
-		
+DB.singeltonSQLUser tester = DB.singeltonSQLUser._getInstance();		
 		User user;
 		try {
 			user = tester.getUserByMail("hej");

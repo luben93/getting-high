@@ -22,13 +22,14 @@ abstract class SQLUser {
 
 	public SQLUser() {
 		// test();
-		conn = connect("130.237.84.69", "mydb", "tester", "good");
+		conn = connect("83.251.242.112", "mydb", "admin", "good@password");
 	}
 
 	public void kill() throws SQLException {
 		conn.close();
 	}
 
+	
 	public Item getItemByName(String name) {
 		Item out = null;
 		try {
@@ -193,12 +194,7 @@ abstract class SQLUser {
 
 			// user doesn't exist, we can create this one
 		} catch (NoSuchSQLLine e) {
-			try {
-				hashpassword = User.hasher(hashpassword);
-			} catch (NoSuchAlgorithmException | UnsupportedEncodingException eu) {
-				// TODO Auto-generated catch block
-				eu.printStackTrace();
-			}
+			
 			// perform SQL query
 			Statement test = conn.createStatement();
 			return test

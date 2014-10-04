@@ -1,12 +1,14 @@
 package DB;
 
+import DB.SQLUser;
+
 public class singeltonSQLUser extends SQLUser {
 final private static singeltonSQLUser sqluser=new singeltonSQLUser();
-	public singeltonSQLUser() {
+	private singeltonSQLUser() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public singeltonSQLUser _getInstance(){
+	public static singeltonSQLUser _getInstance(){
 		return sqluser;
 	}
 

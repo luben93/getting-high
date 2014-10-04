@@ -30,6 +30,10 @@ public class User {
 	public String getMail() {
 		return mail;
 	}
+	
+	public boolean isLoggedIn(){
+		return isLoggedIn;
+	}
 
 	public boolean correctPassword(String enteredhashedpass) {
 		if (enteredhashedpass.equals(new String(hashpassword))) {
