@@ -48,9 +48,7 @@
          {  
          
         try{
-         BO.Fasade fasad = new BO.Fasade(); 
-       
-        	 fasad.createUser(newN, newP);
+         BO.CreateUser CU = new BO.CreateUser(newN, newP); 
         	 
         	 session.setAttribute( "already", "");
         	 request.getRequestDispatcher("newUser.jsp").forward(request, response);
@@ -62,7 +60,7 @@
              session.setAttribute( "already", m);
         	 request.getRequestDispatcher("newUser.jsp").forward(request, response);
          }
-         System.out.print(newN);
+        // System.out.print(newN);
          }
         
                

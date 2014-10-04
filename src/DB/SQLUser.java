@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.PreparedStatement;
+
 
 /**
  * SQLhelper
@@ -22,7 +22,16 @@ abstract class SQLUser {
 
 	public SQLUser() {
 		// test();
-		conn = connect("83.251.242.112", "mydb", "admin", "good@password");
+		conn = connect("83.251.242.112", "mydb", "tester", "good@password");
+		
+		/*Context initCtx = new InitialContext();
+
+		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+
+		DataSource ds = (DataSource)
+
+		envCtx.lookup("jdbc/drugs");		
+		conn=null;*/
 	}
 
 	public void kill() throws SQLException {
@@ -35,7 +44,7 @@ abstract class SQLUser {
 		try {
 			Statement myStmt = conn.createStatement();
 			ResultSet rs = myStmt
-					.executeQuery("select * from Item where iditem = '" + name
+					.executeQuery("select * from item where iditem = '" + name
 							+ "'");
 			while (rs.next()) {
 				out = new Item(rs.getString("iditem"), rs.getString("desc"),
@@ -61,6 +70,7 @@ abstract class SQLUser {
 		java.sql.PreparedStatement pstmt = conn
 				.prepareStatement("update history set payed = 1 where userid = ?");
 		pstmt.setString(1, user.getMail());
+
 		return pstmt.executeUpdate();
 	}
 
@@ -188,19 +198,12 @@ abstract class SQLUser {
 	 */
 	public int createUser(String email, String hashpassword)
 			throws SQLException {
-		try {
-			getUserByMail(email);
-			throw new NoSuchSQLLine("that user already exists");
-
-			// user doesn't exist, we can create this one
-		} catch (NoSuchSQLLine e) {
+		
 			
 			// perform SQL query
 			Statement test = conn.createStatement();
-			return test
-					.executeUpdate("INSERT INTO users ( `password`, `mail`) VALUES ('"
+			return test.executeUpdate("INSERT INTO users ( `password`, `mail`) VALUES ('"
 							+ hashpassword + "','" + email + "')");
-		}
 
 	}
 
