@@ -50,7 +50,7 @@ public class User {
 	public static String hasher(String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(pass.getBytes("UTF-8")); // Change this to "UTF-16" if needed
-		return ""+md.digest();
+		return new String(md.digest());
 	}
 
 
