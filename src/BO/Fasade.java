@@ -28,6 +28,16 @@ public void createUser(String mail,String password) throws SQLException{
 		usr=null;
 	}
 	
+	public double getTotPrice(){
+		double out=0;
+		ArrayList<Item> cart = getCart();
+		for (Item item : cart) {
+			out=out+item.getPrice();
+		}
+		
+		return out;
+	}
+	
 	public void doBuy(boolean bankpayment) throws SQLException{
 		if(bankpayment){
 			singeltonSQLUser._getInstance().payAllItemsInHistory(usr);

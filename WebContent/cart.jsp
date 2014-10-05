@@ -29,6 +29,8 @@ for(int i=0;i<Fasade.getItemList(cat).size();i++){
 
 
 %>
+<BR>
+Price total: <%=fasad.getTotPrice() %>
 
 <FORM ACTION="Buy.jsp">
 <%//list all items and go to pay
@@ -46,6 +48,11 @@ inStore: <%= list.get(i).getSaldo() %>
 <input type="Submit" value="Buy All">
 
 </FORM>
+
+<form action="shop.jsp">
+<input type="Submit" value="shop more">
+</form>
+
 <form action="logout.jsp">
 <input type="Submit" value="logout">
 </form>

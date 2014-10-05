@@ -18,9 +18,7 @@ fasad.doBuy(true);
 <input type="Submit" value="Back to Shop">
 </form>
 
-<form action="cart.jsp">
-<input type="Submit" value="show cart">
-</form>
+
 
 <form action="logout.jsp">
 <input type="Submit" value="logout">
