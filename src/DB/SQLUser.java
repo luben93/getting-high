@@ -163,11 +163,6 @@ abstract class SQLUser {
 		}
 		return out;
 	}
-	
-	public void removeFromCart(User user) throws SQLException{
-		Statement myStmt = conn.createStatement();
-		myStmt.executeUpdate(" ");
-	}
 
 	/**
 	 * 

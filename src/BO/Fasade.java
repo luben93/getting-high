@@ -12,11 +12,17 @@ import DB.singeltonSQLUser;
 
 public class Fasade {
 	private User usr=null;
-	private DBHandler handler;
-	
-	public Fasade(){
-		handler=new DBHandler();
+	/*
+}
+public void createUser(String mail,String password) throws SQLException{
+	try {
+		BO.CreateUser create = new BO.CreateUser(mail,User.hasher(password));
+	} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
+}
+*/
 	
 	public void logout(){
 		usr=null;
@@ -40,11 +46,11 @@ public class Fasade {
 	}
 	
 	public ArrayList<Item> getCart(){
-		return handler.getCart(usr);
+		return singeltonSQLUser._getInstance().getCart(usr);
 	}
 
 public static ArrayList<Item> getItemList(String cat){
-	return DBHandler.getItemsByCat(cat);
+	return singeltonSQLUser._getInstance().getItemsByCategory(cat);
 }
 
 public void addItemToCart(Item item) throws SQLException{
@@ -61,7 +67,6 @@ public boolean login(String email,String password) throws NoSuchSQLLine, NoSuchA
 	if( usr.isLoggedIn()){
 		return true;
 	}else{ 
-		usr=null;
 		return false;
 	}
 }
