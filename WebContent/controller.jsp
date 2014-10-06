@@ -19,10 +19,9 @@
 	if (isLoggedIn){
  //create a session object to CheckUser
 	    	session.setAttribute( "fasad", fasad );
- 			System.out.println("loggar in");
 	    	//System.out.println(isLoggedIn);
 	    	//ref to a logged in user that has the ability to buy items. 
-	    	//session.setAttribute( "isLoggedIn", isLoggedIn );
+	    	session.setAttribute( "isLoggedIn", isLoggedIn );
 	    	request.getRequestDispatcher("shop.jsp").forward(request, response);
    }else{
    	//System.out.println(isLoggedIn);

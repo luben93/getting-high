@@ -29,9 +29,8 @@ public void createUser(String mail,String password) throws SQLException{
 	}
 	
 	public double getTotPrice(){
-		double out=0.0;
+		double out=0;
 		ArrayList<Item> cart = getCart();
-		if(!cart.isEmpty())
 		for (Item item : cart) {
 			out=out+item.getPrice();
 		}

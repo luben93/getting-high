@@ -27,16 +27,16 @@ for(int i=0;i<Fasade.getItemList(cat).size();i++){
 	}
 }
 
-String pricetot=""+fasad.getTotPrice();
+
 %>
 <BR>
-Price total: <%=pricetot %>
+Price total: <%=fasad.getTotPrice() %>
 
 <FORM ACTION="Buy.jsp">
 <%//list all items and go to pay
 ArrayList<Item> list=fasad.getCart();
-if (!list.isEmpty()){
 for(int i = 0; i < list.size(); i++) {
+
    %>
 name: <%= list.get(i).getName() %> 
 price: <%= list.get(i).getPrice() %> 
@@ -44,10 +44,7 @@ inStore: <%= list.get(i).getSaldo() %>
 
 <BR>
 
-<%}}else{ %>
-	cart is empty
-<%}%>
-
+<% } %>
 <input type="Submit" value="Buy All">
 
 </FORM>
