@@ -1,18 +1,19 @@
 package Fasade;
-import BO.User;
+
+import BO.TempUser;
+
 public class CheckUser {
-	private User US ;
 	
 	public CheckUser()
 		{
-		User US = new User();
-		this.US = US;
-	}
+	
+		}
+	
 		
 	public boolean checkUserName(String password)
 	{
-		//return US.checkUserName(password);
-		return true;
+		return US.checkUserName(password);
+		//return true;
 	}
 	
 	public boolean checkPassword(String password)
