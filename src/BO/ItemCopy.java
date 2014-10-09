@@ -1,8 +1,6 @@
 package BO;
 
-import java.util.ArrayList;
 import DB.Item;
-import DB.singeltonSQLUser;
 
 public class ItemCopy extends Item {
 	

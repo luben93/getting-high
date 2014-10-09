@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="java.util.ArrayList" %>
-<%@page import="DB.Item" %>
+<%@page import="BO.ItemCopy" %>
 
 
 <html>
@@ -34,7 +34,7 @@ Price total: <%=pricetot %>
 
 <FORM ACTION="Buy.jsp">
 <%//list all items and go to pay
-ArrayList<Item> list=fasad.getCart();
+ArrayList<ItemCopy> list=fasad.getCart();
 if (!list.isEmpty()){
 for(int i = 0; i < list.size(); i++) {
    %>

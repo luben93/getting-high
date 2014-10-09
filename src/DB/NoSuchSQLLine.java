@@ -2,6 +2,11 @@ package DB;
 
 public class NoSuchSQLLine extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5238030734782241376L;
+
 	public NoSuchSQLLine() {
 		// TODO Auto-generated constructor stub
 	}

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <%@page import="java.util.ArrayList" %>
 <%@page import="BO.Fasade" %>
-<%@page import="DB.Item" %>
+<%@page import="BO.ItemCopy" %>
 <HTML>
 <BODY>
 <%
-ArrayList<Item> list=Fasade.getItemList("cat1");
+ArrayList<ItemCopy> list=Fasade.getItemList("cat1");
 
 %>
 Logged in as: <%= session.getAttribute( "username" ) %>

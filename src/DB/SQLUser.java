@@ -1,7 +1,5 @@
 package DB;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,7 +20,7 @@ abstract class SQLUser {
 
 	public SQLUser() {
 		// test();
-		conn = connect("83.251.242.112", "mydb", "tester", "good@password");
+		conn = connect("83.251.251.65", "mydb", "tester", "good@password");
 		
 		/*Context initCtx = new InitialContext();
 
@@ -59,18 +57,20 @@ abstract class SQLUser {
 		return out;
 	}
 
-	public int addItemsToHistory(Item item, User user) throws SQLException {
-		Statement test = conn.createStatement();
-		return test
-				.executeUpdate("INSERT INTO history (userid,itemid) VALUES ('"
-						+ user.getMail() + "','" + item.getName() + "')");
+	public int addItemsToHistory(Item item, String mail) throws SQLException {
+		java.sql.PreparedStatement test = conn.prepareStatement("INSERT INTO history (userid,itemid) VALUES ('?,?')");
+		test.setString(1, mail);
+		test.setString(2, item.getName());
+		return test.executeUpdate();
+				//.executeUpdate("INSERT INTO history (userid,itemid) VALUES ('"
+					//	+ string + "','" + item.getName() + "')");
 	}
 
-	public int payAllItemsInHistory(User user) throws SQLException {
+	public int payAllItemsInHistory(String string) throws SQLException {
 		// Statement test = conn.createStatement();
 		java.sql.PreparedStatement pstmt = conn
 				.prepareStatement("update history set payed = 1 where userid = ?");
-		pstmt.setString(1, user.getMail());
+		pstmt.setString(1, string);
 
 		return pstmt.executeUpdate();
 	}
@@ -79,13 +79,13 @@ abstract class SQLUser {
 	 * public int payItemInHistory(Item item,User user){ return 0; }
 	 */
 
-	public ArrayList<Item> getCart(User user) {
+	public ArrayList<Item> getCart(String mail) {
 		ArrayList<Item> out = new ArrayList<Item>();
 		try {
-			Statement myStmt = conn.createStatement();
-			ResultSet rs = myStmt
-					.executeQuery("select * from history where payed = 0 and userid='"
-							+ user.getMail() + "'");
+			java.sql.PreparedStatement pstmt = conn.prepareStatement("select * from history where payed = 0 and userid=''");
+			//Statement myStmt = conn.createStatement();
+			ResultSet rs = pstmt.executeQuery(); 
+					//myStmt.executeQuery("select * from history where payed = 0 and userid='"+ mail + "'");
 			Item item = null;
 			while (rs.next()) {
 				item = getItemByName(rs.getString("itemid"));

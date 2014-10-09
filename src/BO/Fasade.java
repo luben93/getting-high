@@ -5,13 +5,15 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.Item;
+//import DB.Item;
+
+
+
 import DB.NoSuchSQLLine;
-import DB.User;
 import DB.singeltonSQLUser;
 
 public class Fasade {
-	private User usr=null;
+	private UserCopy usr=null;
 	private DBHandler handler;
 	
 	public Fasade(){
@@ -22,11 +24,11 @@ public class Fasade {
 		usr=null;
 	}
 	
-	public double getTotPrice(){
+	public double getTotPrice() throws NotLoggedInExecption{
 		double out=0.0;
-		ArrayList<Item> cart = getCart();
+		ArrayList<ItemCopy> cart = getCart();
 		if(!cart.isEmpty())
-		for (Item item : cart) {
+		for (ItemCopy item : cart) {
 			out=out+item.getPrice();
 		}
 		
@@ -35,34 +37,29 @@ public class Fasade {
 	
 	public void doBuy(boolean bankpayment) throws SQLException{
 		if(bankpayment){
-			singeltonSQLUser._getInstance().payAllItemsInHistory(usr);
+			try {
+				singeltonSQLUser._getInstance().payAllItemsInHistory(usr.getUserMail());
+			} catch (NotLoggedInExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}	
 	}
 	
-	public ArrayList<Item> getCart(){
-		return handler.getCart(usr);
+	public ArrayList<ItemCopy> getCart() throws NotLoggedInExecption{
+		return handler.getCart(usr.getUserMail());
 	}
 
-public static ArrayList<Item> getItemList(String cat){
+public static ArrayList<ItemCopy> getItemList(String cat){
 	return DBHandler.getItemsByCat(cat);
 }
 
-public void addItemToCart(Item item) throws SQLException{
-	singeltonSQLUser._getInstance().addItemsToHistory(item, usr);
+public void addItemToCart(ItemCopy item) throws SQLException, NotLoggedInExecption{
+	singeltonSQLUser._getInstance().addItemsToHistory(item, usr.getUserMail());
 }
-public boolean login(String email,String password) throws NoSuchSQLLine, NoSuchAlgorithmException, UnsupportedEncodingException   {
-	singeltonSQLUser sql = singeltonSQLUser._getInstance();
-	System.out.println(email);
-	usr=sql.getUserByMail(email);
-	String hashpassword=User.hasher(password);
-	System.out.println(hashpassword);
-	usr.correctPassword(hashpassword);
-	
-	if( usr.isLoggedIn()){
-		return true;
-	}else{ 
-		usr=null;
-		return false;
-	}
+public boolean login(String mail,String pass) throws NoSuchSQLLine, NoSuchAlgorithmException, UnsupportedEncodingException{
+	usr = new UserCopy(mail);
+	return usr.login(pass);
 }
+
 }
