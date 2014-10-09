@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="BO.*"%>
+<%@page import="Fasade.*"%>
 <html>
 
 <head>
@@ -48,19 +48,17 @@
          {  
          
         try{
-         BO.CreateUser CU = new BO.CreateUser(newN, newP); 
-        	 
-        	 session.setAttribute( "already", "");
-        	 request.getRequestDispatcher("newUser.jsp").forward(request, response);
-         
+         Fasade.CreateUser U = new Fasade.CreateUser(); 
+       
+        	 U.createUser(newN, newP);
          }
-         catch(com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e)
+         catch(com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException e)
          {
         	 String m = "User already exists";
              session.setAttribute( "already", m);
         	 request.getRequestDispatcher("newUser.jsp").forward(request, response);
          }
-        // System.out.print(newN);
+         System.out.print(newN);
          }
         
                
@@ -68,4 +66,3 @@
 
  </body>
 </html>
-
